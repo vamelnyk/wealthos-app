@@ -1,7 +1,7 @@
 # Wealthos
 
-Personal wealth tracking and forecasting — net worth across every account,
-goals, plans, and "what if I…" simulations.
+Personal wealth tracking and forecasting: net worth across every account,
+goals, plans, and "what if" scenario simulations.
 
 **Website:** [wealthos.cc](https://wealthos.cc)
 
