@@ -16,7 +16,7 @@ setup docs**, and **issues**. The application source is private.
 |---|---|---|
 | Where your data lives | Hosted by us, synced across devices | Plain files on your own computer |
 | Access | Any browser | macOS desktop app |
-| Price | Subscription | **One-time purchase** ($50 / €45) |
+| Price | Subscription | One-time purchase |
 | Account required | Yes | No — no sign-up at all |
 | Works offline | No | Yes, entirely |
 | AI tools (MCP) | [Hosted server](./mcp/remote.md) | [Local server](./mcp/local.md) |
