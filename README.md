@@ -10,7 +10,9 @@ one currency, or one country.
 **Website:** [wealthos.cc](https://wealthos.cc)
 
 This repository is the public home for **downloads**, **AI-tool (MCP) setup
-docs**, and **issues**. The application source is private.
+docs**, the **[command-line tool](#command-line-npx-wealthos)**, and
+**issues**. The application source is private; the
+[vault file format](#wealthos-local-its-just-a-folder) is open.
 
 ---
 
@@ -28,6 +30,12 @@ docs**, and **issues**. The application source is private.
   scenarios you want to compare.
 - **Custom metrics.** Define your own wealth metrics (savings rate, runway,
   liquid vs. illiquid) and read them alongside the built-ins.
+- **Ask before you buy.** *"Can I afford a €1,200 flight?"* gets a verdict
+  from your real numbers, plus the trade-offs: a goal pushed back,
+  investments to sell, a safety buffer breached.
+- **Country money rules.** Sourced, dated rules for the cost of buying a home
+  in 16 European countries, the Dutch 30% ruling and German freelancer net
+  income, calculated for your situation.
 - **Your AI, connected.** A built-in MCP server lets Claude, Cursor, Codex and
   others work with all of the above in plain language.
 
@@ -57,20 +65,37 @@ writes plain **YAML** and **Markdown** into a folder *you* pick:
 
 ```
 Wealthos/                  ← your folder, anywhere you like
-  wealthos.vault.yaml
+  wealthos.vault.yaml      ← marks the folder as a vault
+  settings.yaml
   accounts/
-    savings-account.yaml
-    brokerage.yaml
+    3f9c1e2a-….yaml        ← one file per account, named by its id
   goals/
-    house-deposit.yaml
-  income.jsonl
+    8b0d4f71-….yaml
+  plans/  simulations/  metrics/  …
+  income.jsonl             ← one entry per line
   expenses.jsonl
+  snapshots.jsonl          ← net worth over time
   OVERVIEW.md              ← generated, human-readable
+  AGENTS.md                ← generated: the rules, for AI agents
 ```
 
 Open it in any editor. Search it. Put it in Dropbox or a git repo. Copy the
 folder to back it up. If Wealthos ever disappears, your data is still there —
 and still readable. Nothing leaves your machine, not even to us.
+
+### An open format
+
+The folder layout is published as the **Open Wealth Format**, with a JSON
+Schema for every file type, so any program can read and write a vault without
+Wealthos:
+
+- **Specification:** [wealthos.cc/open-wealth-format/v1/README.md](https://wealthos.cc/open-wealth-format/v1/README.md)
+- **JSON Schemas:** [wealthos.cc/open-wealth-format/v1/index.json](https://wealthos.cc/open-wealth-format/v1/index.json)
+
+Every vault also carries an `AGENTS.md`, so an AI agent with file access
+(Claude Code, Codex, Cursor) learns the rules before it edits anything: money
+is a decimal string, files are written whole, and generated files are never
+edited by hand.
 
 ### Download
 
@@ -89,6 +114,31 @@ within the major version. Full details and screenshots:
 Older versions and release notes are on the
 [Releases](https://github.com/vamelnyk/wealthos-app/releases) page.
 
+## Command line: `npx wealthos`
+
+[`wealthos`](https://www.npmjs.com/package/wealthos) runs every Wealthos tool
+from a terminal, for scripts and for AI agents that work through a shell
+(Claude Code, Codex CLI, cron jobs). Output is JSON. It needs Node 20+ and is
+MIT-licensed.
+
+```sh
+npx wealthos init ~/Documents/Wealthos --currency EUR          # create a vault
+npx wealthos call ~/Documents/Wealthos wealth_get              # net worth, as JSON
+npx wealthos call ~/Documents/Wealthos affordability_check amount=1200 what="flight" --text
+npx wealthos doctor ~/Documents/Wealthos                       # validate every file
+npx wealthos schema account                                    # JSON Schema for a file type
+npx wealthos rules nl.expat_tax_regime gross_annual_salary=70000   # no account needed
+```
+
+- **On a Local vault**, pass the folder. If the desktop app has it open,
+  commands go through the app, so they never collide with your edits. The
+  app ships the same tool as `wealthos-core`.
+- **On Wealthos Cloud**, pass `https://mcp.wealthos.cc` instead of a folder,
+  with an API token in `WEALTHOS_TOKEN` (Settings → *Connect to AI tools via
+  MCP*).
+
+Full command list: the [npm page](https://www.npmjs.com/package/wealthos).
+
 ## Connect your AI tools
 
 Wealthos speaks the [Model Context Protocol](https://modelcontextprotocol.io),
@@ -97,10 +147,12 @@ can work with your money data directly:
 
 > *"What's my net worth?"* · *"Add my brokerage account with €12,400."*
 > *"If I save €800 a month, when do I reach €100k?"* · *"Create a house-deposit
-> goal for 2029 and link it to my savings."*
+> goal for 2029 and link it to my savings."* · *"Can I afford a €3,000 sofa
+> this month?"*
 
-The same **46 tools** are available on both editions (accounts, goals, plans,
-income, expenses, forecasts, metrics, currency). Destructive actions require an
+The same **50 tools** are available on both editions (accounts, goals, plans,
+income, expenses, forecasts, metrics, currency, the affordability check and
+country rules). Destructive actions require an
 explicit confirmation, so an assistant can't delete your data on a
 misunderstanding.
 

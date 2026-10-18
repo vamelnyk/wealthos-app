@@ -111,9 +111,12 @@ Transport:  stdio
   MCP server routes through it; if not, it opens the vault directly.
 - **Nothing is exposed.** No listening port, no token — only a process
   your tool starts and stops.
-- The same **46 tools** as the hosted server (accounts, goals, plans,
-  income, expenses, forecasts, metrics, currency). Destructive ones
-  require an explicit `confirm: true`.
+- The same **50 tools** as the hosted server (accounts, goals, plans,
+  income, expenses, forecasts, metrics, currency, the affordability check,
+  country rules). Destructive ones require an explicit `confirm: true`.
+- **Scripts and terminal agents** can call the same tools without MCP:
+  `<binary> call <vault> wealth_get` (or `npx wealthos call …`). Run
+  `<binary> tools <vault> --text` for the list.
 
 ## Troubleshooting
 
