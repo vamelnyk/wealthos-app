@@ -8,8 +8,13 @@ MCP-compatible AI tool can work with your money data directly:
 > *"If I save €800 a month, when do I hit €100k?"* · *"Create a goal for a
 > house deposit by 2029 and link it to my savings account."*
 
-**46 tools** across accounts, goals, plans, income, expenses, forecasts,
-metrics, and currency — the same set on both servers.
+**50 tools** across accounts, goals, plans, income, expenses, forecasts,
+metrics, currency, the affordability check, and country rules — the same set
+on both servers.
+
+Prefer a terminal? The same tools run from the command line with
+[`npx wealthos`](https://www.npmjs.com/package/wealthos), against a Local
+vault or the hosted server.
 
 ---
 

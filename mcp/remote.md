@@ -65,6 +65,8 @@ Restart the tool afterwards; Wealthos tools then appear in its tool list.
 | Forecasts | Run a simulation, or run and save it as a scenario |
 | Metrics | Define and read custom wealth metrics |
 | Preferences | Read/change display currency (migrates goal targets at live rates) |
+| Affordability | "Can I afford X?": a verdict plus trade-offs (goals delayed, investments to sell, buffer breached) |
+| Country rules | Sourced home-buying costs (16 EU countries), Dutch 30% ruling, German freelancer net income |
 
 Destructive tools require an explicit `confirm: true`, so an AI can't
 delete your data on a misunderstanding.
